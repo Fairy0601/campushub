@@ -10,6 +10,10 @@
         id, user_id, title, content, type, status, create_time, comment_count, score
     </sql>
 
+    <sql id="insertFields">
+        user_id, title, content, type, status, create_time, comment_count, score
+    </sql>
+
     <!--查询帖子列表
     List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit);-->
     <select id="selectDiscussPosts" resultType="com.campushub.community.entity.DiscussPost">
@@ -33,5 +37,26 @@
             and user_id = #{userId}
         </if>
     </select>
+
+    <!--增加帖子
+    int insertDiscussPost(DiscussPost discussPost);-->
+    <insert id="insertDiscussPost" parameterType="com.campushub.community.entity.DiscussPost">
+        insert into discuss_post(<include refid="insertFields"></include>)
+        values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
+    </insert>
+
+    <!--查询帖子
+    DiscussPost selectDiscussPostById(int id);-->
+    <select id="selectDiscussPostById" resultType="com.campushub.community.entity.DiscussPost">
+        select <include refid="selectFields"></include>
+        from discuss_post
+        where id=#{id}
+    </select>
+
+    <!--更新帖子的评论数量
+    int updateCommentCount(int id, int commentCount);-->
+    <update id="updateCommentCount">
+        update discuss_post set comment_count = #{commentCount} where id = #{id}
+    </update>
 
 </mapper>
