@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.*;
  * @Version 1.0
  */
 @Mapper
+@Deprecated
 public interface LoginTicketMapper {
     /**
      * 将新的LoginTicket加入数据库中

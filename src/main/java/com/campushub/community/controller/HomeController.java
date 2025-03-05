@@ -4,7 +4,9 @@ import com.campushub.community.entity.DiscussPost;
 import com.campushub.community.entity.Page;
 import com.campushub.community.entity.User;
 import com.campushub.community.service.DiscussPostService;
+import com.campushub.community.service.LikeService;
 import com.campushub.community.service.UserService;
+import com.campushub.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +27,15 @@ import java.util.Map;
  * @Version 1.0
  */
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
     @Autowired
     private DiscussPostService discussPostService;
+
+    @Autowired
+    private LikeService likeService;
 
     //http://localhost:8080/campushub/community/index
     @GetMapping("/index")
@@ -51,6 +56,10 @@ public class HomeController {
                 map.put("post" , post);
                 User user = userService.findUserById(post.getUserId());//使用post对应的userId查询对应的user信息
                 map.put("user", user);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
+
                 discussPosts.add(map);
             }
         }
