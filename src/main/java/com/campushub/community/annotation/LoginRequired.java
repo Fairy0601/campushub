@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * ClassName: LoginRequired
  * Package: com.campushub.community.annotation
- * Description:
+ * Description:检查登陆状态，注解方式的拦截器
  *
  * @Author 欣欣欣
  * @Create 2025/2/27 12:06

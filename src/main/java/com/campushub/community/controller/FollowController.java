@@ -1,8 +1,10 @@
 package com.campushub.community.controller;
 
 import com.campushub.community.annotation.LoginRequired;
+import com.campushub.community.entity.Event;
 import com.campushub.community.entity.Page;
 import com.campushub.community.entity.User;
+import com.campushub.community.event.EventProducer;
 import com.campushub.community.service.FollowService;
 import com.campushub.community.service.UserService;
 import com.campushub.community.util.CommunityConstant;
@@ -36,6 +38,9 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     /**
      * 关注
      * @param entityType
@@ -49,6 +54,16 @@ public class FollowController implements CommunityConstant {
         User user = hostHolder.getUser();
 
         followService.follow(user.getId(), entityType, entityId);
+
+        //触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        //触发事件
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "已关注!");
     }

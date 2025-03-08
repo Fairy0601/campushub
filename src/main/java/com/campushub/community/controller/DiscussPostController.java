@@ -1,9 +1,7 @@
 package com.campushub.community.controller;
 
-import com.campushub.community.entity.Comment;
-import com.campushub.community.entity.DiscussPost;
-import com.campushub.community.entity.Page;
-import com.campushub.community.entity.User;
+import com.campushub.community.entity.*;
+import com.campushub.community.event.EventProducer;
 import com.campushub.community.service.CommentService;
 import com.campushub.community.service.DiscussPostService;
 import com.campushub.community.service.LikeService;
@@ -45,6 +43,9 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     /**
      * 发布帖子
      * @param title
@@ -65,6 +66,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错的情况,将来统一处理.
         return CommunityUtil.getJSONString(0, "发布成功!");

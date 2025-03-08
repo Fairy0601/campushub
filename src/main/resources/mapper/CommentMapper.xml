@@ -42,5 +42,12 @@
         values(#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})
     </insert>
 
+    <!--根据id查询评论
+    Comment selectCommentById(int id);-->
+    <select id="selectCommentById" resultType="com.campushub.community.entity.Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where id = #{id}
+    </select>
 
 </mapper>

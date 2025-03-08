@@ -2,6 +2,7 @@ package com.campushub.community.config;
 
 import com.campushub.community.controller.interceptor.LoginRequiredInterceptor;
 import com.campushub.community.controller.interceptor.LoginTicketInterceptor;
+import com.campushub.community.controller.interceptor.MessageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,6 +25,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginRequiredInterceptor loginRequiredInterceptor;
 
+    @Autowired
+    private MessageInterceptor messageInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //显示登录信息-拦截器
@@ -32,6 +36,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         //检查登录状态-拦截器
         registry.addInterceptor(loginRequiredInterceptor)
+                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
+
+        //未读消息数量
+        registry.addInterceptor(messageInterceptor)
                 .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg");
     }
 }
