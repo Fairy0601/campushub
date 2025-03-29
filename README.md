@@ -1,7 +1,2 @@
-开发社区登录模块：
-  发送邮件；
-  开发注册功能；
-  开发登录、退出功能；
-  显示登录信息--拦截器；
-  账号设置；
-  检查登陆状态--注解方式的拦截器
+校园汇信息共享平台（java后端开发）
+技术栈：SpringBoot+SpringMVC+MyBatis+MySQL+Redis+Kafka+Elasticsearch
