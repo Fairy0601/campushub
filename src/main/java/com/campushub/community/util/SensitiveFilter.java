@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * ClassName: SensitiveFilter
  * Package: com.campushub.community.util
- * Description:
+ * Description:敏感词过滤器——前缀树
  *
  * @Author 欣欣欣
  * @Create 2025/2/27 16:18
@@ -117,6 +117,7 @@ public class SensitiveFilter {
      * @return
      */
     public String filter(String text) {
+        //判空
         if (StringUtils.isBlank(text)) {
             return null;
         }
@@ -127,9 +128,10 @@ public class SensitiveFilter {
         int begin = 0;
         // 指针3
         int position = 0;
-        // 结果
+        // 过滤后的结果
         StringBuilder sb = new StringBuilder();
 
+        //指针3（往返指针）遍历到字符串结束为止
         while (position < text.length()) {
             char c = text.charAt(position);
 
@@ -170,6 +172,7 @@ public class SensitiveFilter {
         // 将最后一批字符计入结果
         sb.append(text.substring(begin));
 
+        //返回替换敏感词后的字符串结果
         return sb.toString();
     }
 

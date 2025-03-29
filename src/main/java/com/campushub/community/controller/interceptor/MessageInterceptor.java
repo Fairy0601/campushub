@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * ClassName: MessageInterceptor
  * Package: com.campushub.community.controller.interceptor
- * Description:
+ * Description: 未读消息：在页面头部显示所有的未读消息数量——拦截器
  *
  * @Author 欣欣欣
  * @Create 2025/3/6 20:22

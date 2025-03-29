@@ -3,7 +3,7 @@ package com.campushub.community.util;
 /**
  * ClassName: RedisKeyUtil
  * Package: com.campushub.community.util
- * Description:
+ * Description: 设置RedisKey的工具类
  *
  * @Author 欣欣欣
  * @Create 2025/3/4 17:06
@@ -11,13 +11,16 @@ package com.campushub.community.util;
  */
 public class RedisKeyUtil {
     private static final String SPLIT = ":";
-    private static final String PREFIX_ENTITY_LIKE = "like:entity";
-    private static final String PREFIX_USER_LIKE = "like:user";
-    private static final String PREFIX_FOLLOWEE = "followee";
-    private static final String PREFIX_FOLLOWER = "follower";
+    private static final String PREFIX_ENTITY_LIKE = "like:entity"; //某实体（帖子和评论）的赞
+    private static final String PREFIX_USER_LIKE = "like:user";  //用户被赞
+    private static final String PREFIX_FOLLOWEE = "followee";  //被关注的人
+    private static final String PREFIX_FOLLOWER = "follower";  //粉丝
     private static final String PREFIX_KAPTCHA = "kaptcha";
     private static final String PREFIX_TICKET = "ticket";
     private static final String PREFIX_USER = "user";
+    private static final String PREFIX_UV = "uv"; //独立访客
+    private static final String PREFIX_DAU = "dau"; //日活跃用户
+    private static final String PREFIX_POST = "post";
 
     /**
      * 某个实体（帖子、评论）的赞
@@ -87,5 +90,54 @@ public class RedisKeyUtil {
      */
     public static String getUserKey(int userId) {
         return PREFIX_USER + SPLIT + userId;
+    }
+
+    //-----------------------Redis高级数据类型---------------------
+
+    /**
+     * 单日UV
+     * @param date
+     * @return
+     */
+    public static String getUVKey(String date) {
+        return PREFIX_UV + SPLIT + date;
+    }
+
+    /**
+     * 区间UV
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static String getUVKey(String startDate, String endDate) {
+        return PREFIX_UV + SPLIT + startDate + SPLIT + endDate;
+    }
+
+    /**
+     * 单日活跃用户DAU
+     * @param date
+     * @return
+     */
+    public static String getDAUKey(String date) {
+        return PREFIX_DAU + SPLIT + date;
+    }
+
+    /**
+     * 区间活跃用户DAU
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static String getDAUKey(String startDate, String endDate) {
+        return PREFIX_DAU + SPLIT + startDate + SPLIT + endDate;
+    }
+
+
+    /**
+     * 热帖排行，帖子分数
+     * @return
+     */
+    public static String getPostScoreKey() {
+        return PREFIX_POST + SPLIT + "score";
     }
 }

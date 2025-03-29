@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiscussPostRepository extends ElasticsearchRepository<DiscussPost, Integer> {
-
+    //内置了很多⽅法，可以像数据库⼀样增删改查
 }

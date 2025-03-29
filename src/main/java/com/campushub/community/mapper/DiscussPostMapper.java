@@ -24,7 +24,7 @@ public interface DiscussPostMapper {
      * @param userId
      * @return 查询到的帖子列表
      */
-    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit);
+    List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit, int orderMode);
 
     /**
      * 查询帖子的行数
@@ -54,5 +54,29 @@ public interface DiscussPostMapper {
      * @return
      */
     int updateCommentCount(int id, int commentCount);
+
+    /**
+     * 修改帖子类型
+     * @param id
+     * @param type
+     * @return
+     */
+    int updateType(int id, int type);
+
+    /**
+     * 修改帖子状态
+     * @param id
+     * @param status
+     * @return
+     */
+    int updateStatus(int id, int status);
+
+    /**
+     * 更新帖子分数
+     * @param id
+     * @param score
+     * @return
+     */
+    int updateScore(int id, double score);
 
 }

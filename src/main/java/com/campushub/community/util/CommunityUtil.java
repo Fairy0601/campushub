@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * ClassName: CommunityUtil
  * Package: com.campushub.community.util
- * Description:用于用户注册时的工具类
+ * Description:用于用户注册时的工具类，以及异步请求
  *
  * @Author 欣欣欣
  * @Create 2025/2/24 15:33

@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 /**
  * ClassName: RedisConfig
  * Package: com.campushub.community.config
- * Description:
+ * Description: redis配置类
  *
  * @Author 欣欣欣
  * @Create 2025/3/4 16:28

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,8 @@ import java.util.concurrent.TimeUnit;
  *              step 1：访问注册页面
  *              step 2：提交注册数据
  *              step 3：激活注册账号
+ *             登录
+ *             退出
  *
  *              使用redis进行了重构，验证码功能
  *
@@ -211,6 +214,7 @@ public class LoginController implements CommunityConstant {
     @GetMapping (path = "/logout")
     public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
+        SecurityContextHolder.clearContext();  //spring security
         return "redirect:/login";
     }
 }

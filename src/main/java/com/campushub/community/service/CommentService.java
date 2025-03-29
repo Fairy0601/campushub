@@ -46,23 +46,28 @@ public class CommentService implements CommunityConstant {
      * @param comment
      * @return
      */
+    //因为方法中存在两个DML语句，为了保证这两次对数据库的操作同时成功或者失败，进行声明式事务
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public int addComment(Comment comment) {
         if (comment == null) {
             throw new IllegalArgumentException("参数不能为空!");
         }
 
-        // 添加评论
+        // 添加评论（HTML转义；过滤敏感词）
         comment.setContent(HtmlUtils.htmlEscape(comment.getContent()));
         comment.setContent(sensitiveFilter.filter(comment.getContent()));
+        //将评论插⼊到数据库comment表中，并返回增加成功⾏数rows
         int rows = commentMapper.insertComment(comment);
 
         // 更新帖子评论数量
         if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            //查询数据库comment表中帖⼦评论的数量
             int count = commentMapper.selectCountByEntity(comment.getEntityType(), comment.getEntityId());
+            //将评论数量更新到discuss_post表⾥⾯
             discussPostService.updateCommentCount(comment.getEntityId(), count);
         }
 
+        //最后返回增加成功⾏数rows
         return rows;
     }
 

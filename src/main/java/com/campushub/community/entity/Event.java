@@ -14,11 +14,11 @@ import java.util.Map;
  * @Version 1.0
  */
 public class Event {
-    private String topic;
-    private int userId;
-    private int entityType;
-    private int entityId;
-    private int entityUserId;
+    private String topic; //事件的类型（点赞、评论、关注）
+    private int userId;  //事件来源（触发的人）
+    private int entityType;  //干了什么（点赞、评论、关注）
+    private int entityId;  //时间发生在哪个实体上，实体id
+    private int entityUserId;  //实体的作者
     private Map<String, Object> data = new HashMap<>(); //其他额外数据，具有扩展性
 
     public String getTopic() {
